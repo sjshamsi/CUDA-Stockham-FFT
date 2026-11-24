@@ -1,0 +1,29 @@
+#!/bin/bash
+#SBATCH --job-name=k80_fft
+#SBATCH --nodes=1
+#SBATCH --gres=gpu:1
+#SBATCH --partition=longrun
+#SBATCH --time=00:20:00
+#SBATCH --output=k80_fft-%j.out
+#SBATCH --error=k80_fft-%j.err
+#SBATCH --exclusive
+#SBATCH --mem=50g
+
+GPU="k80"
+PROB_SIZE=$((2**10))
+
+# Source to build: first argument, default is the final version.
+#   sbatch k80.job ../versions/v1.3_smem_twiddles.cu
+SCRIPT="${1:-../src/fft.cu}"
+BIN="./${GPU}-fft"
+
+module load cuda/11.8
+
+nvcc -O3 -lineinfo -Xptxas=-v -Xcompiler -fopenmp -lcufft \
+  -gencode arch=compute_37,code=sm_37 \
+  -o "${BIN}" "${SCRIPT}"
+
+nsys profile -o "${GPU}_fft_timeline" --stats=true "${BIN}" ${PROB_SIZE}
+
+rm "${BIN}"
+

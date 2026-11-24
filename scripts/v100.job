@@ -1,0 +1,34 @@
+#!/bin/bash
+#SBATCH --job-name=v100_fft
+#SBATCH --nodes=1
+#SBATCH --gres=gpu:v100:1
+#SBATCH --partition=skyvolta
+#SBATCH --time=00:10:00
+#SBATCH --output=v100-%j.out
+#SBATCH --error=v100-%j.err
+#SBATCH --exclusive
+#SBATCH --mem=5g
+
+GPU="v100"
+PROB_SIZE=$((2**26))
+
+# Source to build: first argument, default is the final version.
+#   sbatch v100.job ../versions/v1.3_smem_twiddles.cu
+SCRIPT="${1:-../src/fft.cu}"
+BIN="./${GPU}-fft"
+
+export TMPDIR="${SLURM_TMPDIR:-/tmp/${USER}/ncu-tmp-${SLURM_JOB_ID}}"
+mkdir -p "$TMPDIR"
+chmod 700 "$TMPDIR"
+
+module load cuda/11.8
+
+nvcc -O3 -lineinfo -Xptxas=-v -Xcompiler -fopenmp -lcufft \
+    -gencode arch=compute_70,code=sm_70 \
+      -o "${BIN}" "${SCRIPT}"
+
+nsys profile -o "${GPU}-${SLURM_JOB_ID}" --stats=true "${BIN}" ${PROB_SIZE}
+ncu --target-processes all --set full -o "${GPU}-${SLURM_JOB_ID}" "${BIN}" ${PROB_SIZE}
+
+rm "${BIN}"
+

@@ -1,0 +1,182 @@
+# Version v1 | V100 (sm_70) | job v100-2135647 | source: versions/v1_bitreverse.cu
+# ---- stdout (program output + nsys --stats) ----
+=== GPU FFT v1 vs cuFFT Benchmark ===
+FFT Array Length:     67108864
+
+--- cuFFT Run ---
+Host allocation and input creation took: 5288.42592239 ms
+Device allocation and H2D copy took: 1064.38302994 ms
+cuFFT Plan Creation Time: 385.91098785 ms
+cuFFT Plan Excution Time: 9.05799866 ms
+cuFFT D2H took: 188.42697144 ms
+
+--- myFFT Run ---
+
+# nThreadsPerBlock:   32, nBlocks: 2097152
+Host allocation and input creation took: 4040.64989090 ms
+Device allocation and H2D copy took: 230.84402084 ms
+Execution Time:102.30708122 ms
+Diff:1.267280e-15
+
+# nThreadsPerBlock:   64, nBlocks: 1048576
+Host allocation and input creation took: 4042.34004021 ms
+Device allocation and H2D copy took: 228.74093056 ms
+Execution Time:119.55404282 ms
+Diff:1.267280e-15
+
+# nThreadsPerBlock:  128, nBlocks:  524288
+Host allocation and input creation took: 4042.19198227 ms
+Device allocation and H2D copy took: 228.01518440 ms
+Execution Time:119.19307709 ms
+Diff:1.267280e-15
+
+# nThreadsPerBlock:  256, nBlocks:  262144
+Host allocation and input creation took: 4040.94004631 ms
+Device allocation and H2D copy took: 228.41501236 ms
+Execution Time:118.96991730 ms
+Diff:1.267280e-15
+
+# nThreadsPerBlock:  512, nBlocks:  131072
+Host allocation and input creation took: 4041.67914391 ms
+Device allocation and H2D copy took: 227.22005844 ms
+Execution Time:121.71602249 ms
+Diff:1.267280e-15
+
+# nThreadsPerBlock: 1024, nBlocks:   65536
+Host allocation and input creation took: 4041.31317139 ms
+Device allocation and H2D copy took: 228.59501839 ms
+Execution Time:122.98011780 ms
+Diff:1.267280e-15
+
+ Time (%)  Total Time (ns)  Num Calls    Avg (ns)      Med (ns)     Min (ns)   Max (ns)    StdDev (ns)           Name         
+ --------  ---------------  ---------  ------------  -------------  --------  -----------  ------------  ---------------------
+     99.0   30,769,129,806        323  95,260,463.8  100,222,890.0    12,261  100,371,779  20,843,139.3  poll                 
+      0.9      291,783,201      1,127     258,902.6       48,590.0     1,749   64,723,155   2,033,849.2  ioctl                
+      0.0        9,594,912         88     109,033.1       69,316.5     5,213    5,114,628     541,203.3  mmap64               
+      0.0        1,777,415        116      15,322.5       14,200.0     6,175       47,451       5,676.3  open64               
+      0.0        1,749,559         14     124,968.5      144,988.5    44,993      188,190      49,494.8  sem_timedwait        
+      0.0        1,275,350          4     318,837.5      183,368.5   121,388      787,225     314,149.4  pthread_create       
+      0.0          454,686         29      15,678.8        9,376.0     5,343       52,003      13,592.0  fclose               
+      0.0          412,082         27      15,262.3        9,616.0     3,394      134,305      24,630.9  mmap                 
+      0.0          394,009         35      11,257.4        9,521.0     3,411       23,514       5,187.9  fopen                
+      0.0          247,843        122       2,031.5        1,801.5     1,308        3,178         527.2  fcntl                
+      0.0          208,404         24       8,683.5        7,606.0     4,686       16,955       3,421.3  munmap               
+      0.0          123,751         16       7,734.4        8,402.0     2,648       11,338       2,267.1  write                
+      0.0           95,029         19       5,001.5        5,358.0     3,218        6,944       1,127.3  read                 
+      0.0           77,897          1      77,897.0       77,897.0    77,897       77,897           0.0  fgets                
+      0.0           73,258          6      12,209.7       13,239.0     7,486       17,043       3,691.2  open                 
+      0.0           31,544          2      15,772.0       15,772.0    12,770       18,774       4,245.5  fread                
+      0.0           21,140          1      21,140.0       21,140.0    21,140       21,140           0.0  pipe2                
+      0.0           19,459          4       4,864.8        4,463.5     3,912        6,620       1,199.0  mprotect             
+      0.0           16,811          1      16,811.0       16,811.0    16,811       16,811           0.0  connect              
+      0.0           16,565          2       8,282.5        8,282.5     5,984       10,581       3,250.6  socket               
+      0.0            2,724          1       2,724.0        2,724.0     2,724        2,724           0.0  bind                 
+      0.0            2,364          1       2,364.0        2,364.0     2,364        2,364           0.0  pthread_mutex_trylock
+      0.0            1,853          1       1,853.0        1,853.0     1,853        1,853           0.0  listen               
+
+ Time (%)  Total Time (ns)  Num Calls    Avg (ns)       Med (ns)      Min (ns)     Max (ns)     StdDev (ns)               Name            
+ --------  ---------------  ---------  -------------  -------------  -----------  -----------  -------------  ----------------------------
+     66.9    3,193,314,673         14  228,093,905.2  222,236,292.5  188,426,103  334,430,729   32,073,557.8  cudaMemcpy                  
+     14.9      712,450,584        163    4,370,862.5    3,331,542.0    2,876,064   32,958,387    5,354,432.1  cudaDeviceSynchronize       
+      9.9      474,640,419          8   59,330,052.4    2,520,948.0    1,074,342  456,124,619  160,335,440.1  cudaMalloc                  
+      8.2      392,953,122          9   43,661,458.0    1,309,131.0    1,202,440  379,521,978  125,949,218.5  cudaFree                    
+      0.0        1,081,009        162        6,672.9        4,534.5        3,921       78,266        9,466.3  cudaLaunchKernel            
+      0.0          594,326          1      594,326.0      594,326.0      594,326      594,326            0.0  cuMemFree_v2                
+      0.0          403,502          4      100,875.5       24,755.5        5,357      348,634      166,068.5  cuMemcpyHtoD_v2             
+      0.0          354,948          3      118,316.0      127,856.0       96,863      130,229       18,616.7  cuModuleLoadData            
+      0.0          201,350          1      201,350.0      201,350.0      201,350      201,350            0.0  cuMemAlloc_v2               
+      0.0          143,152        384          372.8          313.0          201        3,278          281.9  cuGetProcAddress            
+      0.0           65,880          3       21,960.0        8,454.0        5,743       51,683       25,776.5  cuLaunchKernel              
+      0.0           35,588          1       35,588.0       35,588.0       35,588       35,588            0.0  cuMemGetInfo_v2             
+      0.0            8,603          1        8,603.0        8,603.0        8,603        8,603            0.0  cudaStreamIsCapturing_v10000
+      0.0            2,455          1        2,455.0        2,455.0        2,455        2,455            0.0  cuInit                      
+
+ Time (%)  Total Time (ns)  Instances    Avg (ns)      Med (ns)     Min (ns)    Max (ns)   StdDev (ns)       GridXYZ          BlockXYZ                                                     Name                                                
+ --------  ---------------  ---------  ------------  ------------  ----------  ----------  -----------  -----------------  --------------  ----------------------------------------------------------------------------------------------------
+     12.6       89,796,748         26   3,453,721.1   3,461,260.0   3,226,637   3,860,170    103,633.3  32768    1    1    1024    1    1  fft_stage_kernel(unsigned long long, Complex *, int, int)                                           
+     12.4       88,499,990         26   3,403,845.8   3,396,091.5   3,164,045   3,857,449    115,035.0  65536    1    1     512    1    1  fft_stage_kernel(unsigned long long, Complex *, int, int)                                           
+     12.2       86,593,374         26   3,330,514.4   3,323,100.5   3,142,317   3,875,753    122,730.3  524288    1    1     64    1    1  fft_stage_kernel(unsigned long long, Complex *, int, int)                                           
+     12.2       86,477,824         26   3,326,070.2   3,316,349.0   3,145,901   3,834,601    114,637.3  131072    1    1    256    1    1  fft_stage_kernel(unsigned long long, Complex *, int, int)                                           
+     12.1       86,328,832         26   3,320,339.7   3,313,292.5   3,134,157   3,849,065    119,639.1  262144    1    1    128    1    1  fft_stage_kernel(unsigned long long, Complex *, int, int)                                           
+     10.8       76,735,674         26   2,951,372.1   2,897,054.5   2,872,495   4,324,198    280,424.6  1048576    1    1    32    1    1  fft_stage_kernel(unsigned long long, Complex *, int, int)                                           
+      4.6       32,908,189          1  32,908,189.0  32,908,189.0  32,908,189  32,908,189          0.0  131072    1    1    512    1    1  bit_reverse_kernel(unsigned long long, int, Complex *)                                              
+      4.6       32,872,222          1  32,872,222.0  32,872,222.0  32,872,222  32,872,222          0.0  65536    1    1    1024    1    1  bit_reverse_kernel(unsigned long long, int, Complex *)                                              
+      4.6       32,638,687          1  32,638,687.0  32,638,687.0  32,638,687  32,638,687          0.0  1048576    1    1    64    1    1  bit_reverse_kernel(unsigned long long, int, Complex *)                                              
+      4.6       32,533,696          1  32,533,696.0  32,533,696.0  32,533,696  32,533,696          0.0  524288    1    1    128    1    1  bit_reverse_kernel(unsigned long long, int, Complex *)                                              
+      4.5       32,121,569          1  32,121,569.0  32,121,569.0  32,121,569  32,121,569          0.0  262144    1    1    256    1    1  bit_reverse_kernel(unsigned long long, int, Complex *)                                              
+      3.5       25,252,073          1  25,252,073.0  25,252,073.0  25,252,073  25,252,073          0.0  2097152    1    1    32    1    1  bit_reverse_kernel(unsigned long long, int, Complex *)                                              
+      0.9        6,235,451          2   3,117,725.5   3,117,725.5   2,696,496   3,538,955    595,708.5  8192    1    1       16   32    1  void regular_fft<(unsigned int)512, (unsigned int)16, (unsigned int)16, (unsigned int)1, (padding_t…
+      0.4        2,729,552          1   2,729,552.0   2,729,552.0   2,729,552   2,729,552          0.0  32768    1    1       8   16    1  void regular_fft<(unsigned int)256, (unsigned int)16, (unsigned int)8, (unsigned int)3, (padding_t)…
+
+ Time (%)  Total Time (ns)  Count    Avg (ns)       Med (ns)      Min (ns)     Max (ns)     StdDev (ns)       Operation     
+ --------  ---------------  -----  -------------  -------------  -----------  -----------  -------------  ------------------
+     52.9    1,687,196,354     11  153,381,486.7  225,124,491.0        1,280  334,072,857  125,681,864.7  [CUDA memcpy HtoD]
+     47.1    1,503,088,778      7  214,726,968.3  219,131,501.0  188,303,934  219,296,810   11,651,941.6  [CUDA memcpy DtoH]
+
+ Total (MB)  Count  Avg (MB)   Med (MB)   Min (MB)   Max (MB)   StdDev (MB)      Operation     
+ ----------  -----  ---------  ---------  ---------  ---------  -----------  ------------------
+  7,516.633     11    683.330  1,073.742      0.000  1,073.742      541.674  [CUDA memcpy HtoD]
+  7,516.193      7  1,073.742  1,073.742  1,073.742  1,073.742        0.000  [CUDA memcpy DtoH]
+
+# ---- second run of the same binary under Nsight Compute (ncu --set full): timings below are inflated by profiling ----
+=== GPU FFT v1 vs cuFFT Benchmark ===
+FFT Array Length:     67108864
+
+--- cuFFT Run ---
+Host allocation and input creation took: 4409.59000587 ms
+Device allocation and H2D copy took: 792.53888130 ms
+cuFFT Plan Creation Time: 411.79609299 ms
+cuFFT Plan Excution Time: 4610.00084877 ms
+cuFFT D2H took: 187.53409386 ms
+
+--- myFFT Run ---
+
+# nThreadsPerBlock:   32, nBlocks: 2097152
+Host allocation and input creation took: 4009.24515724 ms
+Device allocation and H2D copy took: 224.46107864 ms
+Execution Time:33167.16194153 ms
+Diff:1.267280e-15
+
+# nThreadsPerBlock:   64, nBlocks: 1048576
+Host allocation and input creation took: 3999.59802628 ms
+Device allocation and H2D copy took: 221.41790390 ms
+Execution Time:34057.27791786 ms
+Diff:1.267280e-15
+
+# nThreadsPerBlock:  128, nBlocks:  524288
+Host allocation and input creation took: 4001.68704987 ms
+Device allocation and H2D copy took: 221.07195854 ms
+Execution Time:34283.77914429 ms
+Diff:1.267280e-15
+
+# nThreadsPerBlock:  256, nBlocks:  262144
+Host allocation and input creation took: 4002.88295746 ms
+Device allocation and H2D copy took: 222.23496437 ms
+Execution Time:33447.12686539 ms
+Diff:1.267280e-15
+
+# nThreadsPerBlock:  512, nBlocks:  131072
+Host allocation and input creation took: 3999.01890755 ms
+Device allocation and H2D copy took: 222.12600708 ms
+Execution Time:32604.11500931 ms
+Diff:1.267280e-15
+
+# nThreadsPerBlock: 1024, nBlocks:   65536
+Host allocation and input creation took: 3991.65296555 ms
+Device allocation and H2D copy took: 221.63891792 ms
+Execution Time:32520.34783363 ms
+Diff:1.267280e-15
+
+# ---- stderr (nvcc -Xptxas=-v) ----
+ptxas info    : 272 bytes gmem
+ptxas info    : Compiling entry function '_Z16fft_stage_kernelyP7Complexii' for 'sm_70'
+ptxas info    : Function properties for _Z16fft_stage_kernelyP7Complexii
+    48 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 32 registers, 376 bytes cmem[0], 40 bytes cmem[2]
+ptxas info    : Function properties for __internal_trig_reduction_slowpathd
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Compiling entry function '_Z18bit_reverse_kernelyiP7Complex' for 'sm_70'
+ptxas info    : Function properties for _Z18bit_reverse_kernelyiP7Complex
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 16 registers, 376 bytes cmem[0]
+SKIPPED: v100-2135647.sqlite does not contain NV Tools Extension (NVTX) data.

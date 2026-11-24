@@ -1,0 +1,51 @@
+# Version v1 | K80 (sm_37) | job k80_fft-2135559 | source: versions/v1_bitreverse.cu
+# ---- stdout ----
+=== GPU FFT v1 vs cuFFT Benchmark ===
+FFT Array Length:     67108864
+
+--- cuFFT Run ---
+Host allocation and input creation took: 4705.06906509 ms
+Device allocation and H2D copy took: 571.17486000 ms
+cuFFT Plan Creation Time: 350.85606575 ms
+cuFFT Plan Excution Time: 57.16395378 ms
+cuFFT D2H took: 119.46892738 ms
+
+--- myFFT Run ---
+
+# nThreadsPerBlock:   32, nBlocks: 2097152
+Host allocation and input creation took: 4478.83296013 ms
+Device allocation and H2D copy took: 143.24617386 ms
+Execution Time:609.30705070 ms
+Diff:1.126970e-15
+
+# nThreadsPerBlock:   64, nBlocks: 1048576
+Host allocation and input creation took: 4621.23894691 ms
+Device allocation and H2D copy took: 116.06717110 ms
+Execution Time:493.48807335 ms
+Diff:1.126970e-15
+
+# nThreadsPerBlock:  128, nBlocks:  524288
+Host allocation and input creation took: 4437.77799606 ms
+Device allocation and H2D copy took: 116.99604988 ms
+Execution Time:509.95683670 ms
+Diff:1.126970e-15
+
+# nThreadsPerBlock:  256, nBlocks:  262144
+Host allocation and input creation took: 4439.87107277 ms
+Device allocation and H2D copy took: 116.27602577 ms
+Execution Time:520.21503448 ms
+Diff:1.126970e-15
+
+# nThreadsPerBlock:  512, nBlocks:  131072
+Host allocation and input creation took: 4438.67397308 ms
+Device allocation and H2D copy took: 116.40381813 ms
+Execution Time:525.86913109 ms
+Diff:1.126970e-15
+
+# nThreadsPerBlock: 1024, nBlocks:   65536
+Host allocation and input creation took: 4438.40599060 ms
+Device allocation and H2D copy took: 116.17207527 ms
+Execution Time:527.35304832 ms
+Diff:1.126970e-15
+# ---- stderr ----
+nvcc warning : The 'compute_35', 'compute_37', 'sm_35', and 'sm_37' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).

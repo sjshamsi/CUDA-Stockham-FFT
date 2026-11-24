@@ -1,0 +1,170 @@
+# Version v1.4a | V100 (sm_70) | job v100-2135663 | source: versions/v1.4a_stockham.cu
+# ---- stdout (program output + nsys --stats) ----
+=== GPU FFT v1.4 vs cuFFT Benchmark ===
+FFT Array Length:     67108864
+
+--- cuFFT Run ---
+Device allocation and initialization (launch) took: 3.47104001 ms
+cuFFT Plan Creation Time: n/a (host-side API work)
+cuFFT Plan Execution Time: 9.02739239 ms
+
+--- myFFT Run ---
+
+# nThreadsPerBlock:   32, nBlocks: 2097152
+Device allocation and initialization (launch) took: 3.80742407 ms
+Execution Time:82.83286285 ms
+
+# nThreadsPerBlock:   64, nBlocks: 1048576
+Device allocation and initialization (launch) took: 7.29366398 ms
+Execution Time:96.70390320 ms
+
+# nThreadsPerBlock:  128, nBlocks:  524288
+Device allocation and initialization (launch) took: 4.48249578 ms
+Execution Time:89.30150604 ms
+
+# nThreadsPerBlock:  256, nBlocks:  262144
+Device allocation and initialization (launch) took: 2.79503989 ms
+Execution Time:88.80636597 ms
+
+# nThreadsPerBlock:  512, nBlocks:  131072
+Device allocation and initialization (launch) took: 2.76483202 ms
+Execution Time:88.82736206 ms
+
+# nThreadsPerBlock: 1024, nBlocks:   65536
+Device allocation and initialization (launch) took: 2.80006409 ms
+Execution Time:84.13523102 ms
+
+Diff:1.270626e-15
+
+ Time (%)  Total Time (ns)  Num Calls    Avg (ns)      Med (ns)    Min (ns)   Max (ns)    StdDev (ns)           Name         
+ --------  ---------------  ---------  ------------  ------------  --------  -----------  ------------  ---------------------
+     81.0    1,401,373,416         30  46,712,447.2  18,503,107.5     4,201  100,323,493  46,728,437.7  poll                 
+     18.0      312,382,418      1,173     266,310.7      42,438.0     1,114   60,568,872   1,891,253.8  ioctl                
+      0.5        8,093,395         88      91,970.4      64,046.5     5,171    4,032,354     426,689.4  mmap64               
+      0.2        3,717,452         14     265,532.3     165,462.0    50,923    1,883,116     469,149.1  sem_timedwait        
+      0.1        1,647,782        116      14,205.0      12,371.5     6,312       45,465       5,693.5  open64               
+      0.1        1,577,251          4     394,312.8     194,870.5   174,337    1,013,173     412,745.2  pthread_create       
+      0.0          560,363         29      19,322.9       9,753.0     5,336      149,038      30,635.2  fclose               
+      0.0          441,142         35      12,604.1      10,077.0     3,409       53,394       8,848.6  fopen                
+      0.0          393,036         33      11,910.2       7,835.0     2,368      117,057      19,599.5  mmap                 
+      0.0          220,917        122       1,810.8       1,885.0     1,294        3,540         415.9  fcntl                
+      0.0          198,886         35       5,682.5       4,005.0     1,352       15,468       3,854.9  munmap               
+      0.0          159,050         19       8,371.1       4,824.0     1,596       70,202      15,365.8  read                 
+      0.0          110,084         16       6,880.3       6,874.5     4,728        9,178       1,126.9  write                
+      0.0           76,637          1      76,637.0      76,637.0    76,637       76,637           0.0  fgets                
+      0.0           73,353          6      12,225.5      12,745.5     7,825       16,454       2,925.1  open                 
+      0.0           32,770          2      16,385.0      16,385.0    12,246       20,524       5,853.4  fread                
+      0.0           28,716          4       7,179.0       7,346.0     5,248        8,776       1,469.1  mprotect             
+      0.0           17,686          2       8,843.0       8,843.0     7,880        9,806       1,361.9  socket               
+      0.0           15,848          1      15,848.0      15,848.0    15,848       15,848           0.0  connect              
+      0.0           11,206          1      11,206.0      11,206.0    11,206       11,206           0.0  pipe2                
+      0.0            6,119          1       6,119.0       6,119.0     6,119        6,119           0.0  bind                 
+      0.0            3,338          1       3,338.0       3,338.0     3,338        3,338           0.0  listen               
+      0.0            1,365          1       1,365.0       1,365.0     1,365        1,365           0.0  pthread_mutex_trylock
+
+ Time (%)  Total Time (ns)  Num Calls    Avg (ns)       Med (ns)     Min (ns)   Max (ns)     StdDev (ns)               Name            
+ --------  ---------------  ---------  -------------  -------------  --------  -----------  -------------  ----------------------------
+     65.2      914,856,354         17   53,815,079.6    1,942,255.0     3,212  388,553,851   95,357,743.1  cudaFree                    
+     30.4      425,655,553          2  212,827,776.5  212,827,776.5     5,066  425,650,487  300,976,763.6  cudaStreamCreate            
+      2.5       34,897,336         16    2,181,083.5    1,612,096.5     3,126    8,721,689    2,159,336.9  cudaMalloc                  
+      1.5       20,953,396         14    1,496,671.1    1,642,251.0     7,231    8,933,015    2,302,795.0  cudaEventSynchronize        
+      0.2        2,826,853          2    1,413,426.5    1,413,426.5    11,816    2,815,037    1,982,176.6  cudaMemcpyAsync             
+      0.1        1,037,488        164        6,326.1        5,318.0     3,027       67,481        6,511.0  cudaLaunchKernel            
+      0.0          519,453          4      129,863.3       26,383.5     6,931      459,755      220,579.3  cuMemcpyHtoD_v2             
+      0.0          497,992          3      165,997.3      188,003.0   121,076      188,913       38,905.7  cuModuleLoadData            
+      0.0          304,208          1      304,208.0      304,208.0   304,208      304,208            0.0  cuMemAlloc_v2               
+      0.0          169,561         29        5,846.9        4,266.0     1,758       27,939        5,315.6  cudaEventRecord             
+      0.0          151,098        384          393.5          311.0       203        3,725          312.7  cuGetProcAddress            
+      0.0          101,216          1      101,216.0      101,216.0   101,216      101,216            0.0  cuMemGetInfo_v2             
+      0.0           94,416          1       94,416.0       94,416.0    94,416       94,416            0.0  cuMemFree_v2                
+      0.0           50,861          3       16,953.7        9,716.0     9,544       31,601       12,685.3  cuLaunchKernel              
+      0.0           49,243         29        1,698.0        1,075.0       429        9,978        1,918.7  cudaEventCreate             
+      0.0           28,057         29          967.5          733.0       386        4,086          750.4  cudaEventDestroy            
+      0.0           16,497          2        8,248.5        8,248.5     2,965       13,532        7,472.0  cudaStreamDestroy           
+      0.0           13,672          2        6,836.0        6,836.0     2,668       11,004        5,894.4  cudaMemsetAsync             
+      0.0           11,044          1       11,044.0       11,044.0    11,044       11,044            0.0  cudaStreamIsCapturing_v10000
+      0.0            4,900          1        4,900.0        4,900.0     4,900        4,900            0.0  cudaStreamWaitEvent         
+      0.0            2,056          1        2,056.0        2,056.0     2,056        2,056            0.0  cudaStreamSynchronize       
+      0.0            1,165          1        1,165.0        1,165.0     1,165        1,165            0.0  cuInit                      
+
+ Time (%)  Total Time (ns)  Instances   Avg (ns)     Med (ns)    Min (ns)   Max (ns)   StdDev (ns)       GridXYZ          BlockXYZ                                                     Name                                                
+ --------  ---------------  ---------  -----------  -----------  ---------  ---------  -----------  -----------------  --------------  ----------------------------------------------------------------------------------------------------
+     16.4       84,759,519         26  3,259,981.5  3,322,603.5  3,019,725  4,563,108    305,479.1  65536    1    1     512    1    1  fft_stockham_stage_kernel(unsigned long long, const double2 *, double2 *, unsigned long long)       
+     16.3       84,705,601         26  3,257,907.7  3,319,868.0  3,016,750  4,538,373    301,840.0  131072    1    1    256    1    1  fft_stockham_stage_kernel(unsigned long long, const double2 *, double2 *, unsigned long long)       
+     16.2       84,014,180         26  3,231,314.6  3,261,516.0  3,014,062  4,542,852    308,939.7  262144    1    1    128    1    1  fft_stockham_stage_kernel(unsigned long long, const double2 *, double2 *, unsigned long long)       
+     16.1       83,641,320         26  3,216,973.8  3,102,781.5  3,014,894  4,539,908    309,973.2  524288    1    1     64    1    1  fft_stockham_stage_kernel(unsigned long long, const double2 *, double2 *, unsigned long long)       
+     15.4       80,045,882         26  3,078,687.8  3,126,973.0  2,833,071  4,362,566    295,904.8  32768    1    1    1024    1    1  fft_stockham_stage_kernel(unsigned long long, const double2 *, double2 *, unsigned long long)       
+     14.9       77,234,381         26  2,970,553.1  2,845,726.5  2,836,111  4,291,173    293,920.5  1048576    1    1    32    1    1  fft_stockham_stage_kernel(unsigned long long, const double2 *, double2 *, unsigned long long)       
+      2.3       11,958,872          7  1,708,410.3  1,733,173.0  1,560,247  1,736,918     65,406.8  262144    1    1    256    1    1  init_signal_kernel(unsigned long long, double2 *)                                                   
+      1.2        6,225,466          2  3,112,733.0  3,112,733.0  2,694,480  3,530,986    591,499.1  8192    1    1       16   32    1  void regular_fft<(unsigned int)512, (unsigned int)16, (unsigned int)16, (unsigned int)1, (padding_t…
+      0.5        2,800,560          1  2,800,560.0  2,800,560.0  2,800,560  2,800,560          0.0  262144    1    1    256    1    1  check_accuracy_kernel(unsigned long long, double2 *, double2 *, double *, double *)                 
+      0.5        2,729,967          1  2,729,967.0  2,729,967.0  2,729,967  2,729,967          0.0  32768    1    1       8   16    1  void regular_fft<(unsigned int)256, (unsigned int)16, (unsigned int)8, (unsigned int)3, (padding_t)…
+
+ Time (%)  Total Time (ns)  Count  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)      Operation     
+ --------  ---------------  -----  --------  --------  --------  --------  -----------  ------------------
+     85.0           42,464      4  10,616.0   1,280.0     1,248    38,656     18,693.3  [CUDA memcpy HtoD]
+      9.0            4,511      2   2,255.5   2,255.5     1,696     2,815        791.3  [CUDA memcpy DtoH]
+      6.0            3,007      2   1,503.5   1,503.5     1,152     1,855        497.1  [CUDA memset]     
+
+ Total (MB)  Count  Avg (MB)  Med (MB)  Min (MB)  Max (MB)  StdDev (MB)      Operation     
+ ----------  -----  --------  --------  --------  --------  -----------  ------------------
+      0.440      4     0.110     0.000     0.000     0.440        0.220  [CUDA memcpy HtoD]
+      0.000      2     0.000     0.000     0.000     0.000        0.000  [CUDA memcpy DtoH]
+      0.000      2     0.000     0.000     0.000     0.000        0.000  [CUDA memset]     
+
+# ---- second run of the same binary under Nsight Compute (ncu --set full): timings below are inflated by profiling ----
+=== GPU FFT v1.4 vs cuFFT Benchmark ===
+FFT Array Length:     67108864
+
+--- cuFFT Run ---
+Device allocation and initialization (launch) took: 1642.98803711 ms
+cuFFT Plan Creation Time: n/a (host-side API work)
+cuFFT Plan Execution Time: 4183.02685547 ms
+
+--- myFFT Run ---
+
+# nThreadsPerBlock:   32, nBlocks: 2097152
+Device allocation and initialization (launch) took: 1322.90966797 ms
+Execution Time:30383.48437500 ms
+
+# nThreadsPerBlock:   64, nBlocks: 1048576
+Device allocation and initialization (launch) took: 1076.08679199 ms
+Execution Time:30242.34570312 ms
+
+# nThreadsPerBlock:  128, nBlocks:  524288
+Device allocation and initialization (launch) took: 1069.52709961 ms
+Execution Time:29682.60546875 ms
+
+# nThreadsPerBlock:  256, nBlocks:  262144
+Device allocation and initialization (launch) took: 1096.73986816 ms
+Execution Time:30262.93945312 ms
+
+# nThreadsPerBlock:  512, nBlocks:  131072
+Device allocation and initialization (launch) took: 1142.13269043 ms
+Execution Time:29377.84960938 ms
+
+# nThreadsPerBlock: 1024, nBlocks:   65536
+Device allocation and initialization (launch) took: 1179.77600098 ms
+Execution Time:28037.95507812 ms
+
+Diff:1.270626e-15
+
+# ---- stderr (nvcc -Xptxas=-v) ----
+ptxas info    : 272 bytes gmem
+ptxas info    : Compiling entry function '_Z21check_accuracy_kernelyP7double2S0_PdS1_' for 'sm_70'
+ptxas info    : Function properties for _Z21check_accuracy_kernelyP7double2S0_PdS1_
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 30 registers, 4096 bytes smem, 392 bytes cmem[0], 8 bytes cmem[2]
+ptxas info    : Compiling entry function '_Z25fft_stockham_stage_kernelyPK7double2PS_y' for 'sm_70'
+ptxas info    : Function properties for _Z25fft_stockham_stage_kernelyPK7double2PS_y
+    48 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 38 registers, 384 bytes cmem[0], 40 bytes cmem[2]
+ptxas info    : Function properties for __internal_trig_reduction_slowpathd
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Compiling entry function '_Z18init_signal_kernelyP7double2' for 'sm_70'
+ptxas info    : Function properties for _Z18init_signal_kernelyP7double2
+    48 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 32 registers, 368 bytes cmem[0], 48 bytes cmem[2]
+ptxas info    : Function properties for __internal_trig_reduction_slowpathd
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+SKIPPED: v100-2135663.sqlite does not contain NV Tools Extension (NVTX) data.

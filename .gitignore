@@ -1,0 +1,11 @@
+# build products
+/fft
+*-fft
+*.o
+# Slurm and profiler output (large; summaries live in results/)
+*.out
+*.err
+*.nsys-rep
+*.ncu-rep
+*.sqlite
+*.qdstrm
